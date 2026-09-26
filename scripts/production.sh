@@ -2,29 +2,24 @@
 
 source ../config
 
-EXE_NAME="out.exe"
+EXE="*.exe*"
 
 function clean_env()
 {
     cd $DIR_ROOT
-    echo -e "\nBuild (1/3) - Cleaning env"
+    echo -e "\nBuild (1/2) - Cleaning env"
     clear_dir "$DIR_TARGET"
-    if ls $DIR_BUILD/${EXE_NAME}* 1> /dev/null 2>&1; then
-        rm -f $DIR_BUILD/${EXE_NAME}*
+    clear_dir "$DIR_OUTPUT"
+    # clear_dir "$DIR_LOG"
+    if ls $DIR_BUILD/$EXE 1> /dev/null 2>&1; then
+        rm -f $DIR_BUILD/$EXE
     fi
-}
-
-function prep_env()
-{
-    cd $DIR_ROOT
-    echo -e "\nBuild (2/3) - Preparing env"
-    create_dir "$DIR_EXTERNAL"
 }
 
 function build_all()
 {
     cd $DIR_ROOT
-    echo -e "\nBuild (3/3) - Building"
+    echo -e "\nBuild (2/2) - Building"
 
     cmake -S . -B $DIR_BUILD
     cmake --build $DIR_BUILD
@@ -42,9 +37,9 @@ function copy_firmware()
     cd $DIR_ROOT
     echo -ne "\nCopying firmware to exe"
 
-    if ls $DIR_BUILD/${EXE_NAME}.* 1> /dev/null 2>&1; then
+    if ls $DIR_BUILD/$EXE 1> /dev/null 2>&1; then
         echo -e " ✅\n"
-        cp $DIR_BUILD/${EXE_NAME}.* $DIR_TARGET/
+        cp $DIR_BUILD/$EXE $DIR_TARGET/
     else
         echo -e " ❌\n"
         echo -e "\nproduction.sh - ERROR - no firmware outputs in $DIR_BUILD/\n"
@@ -55,8 +50,6 @@ function copy_firmware()
 # START #
 
 clean_env
-
-prep_env
 
 build_all
 

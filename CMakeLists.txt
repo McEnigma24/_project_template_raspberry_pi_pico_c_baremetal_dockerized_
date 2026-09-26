@@ -1,22 +1,12 @@
 cmake_minimum_required(VERSION 3.18)
 
-include(FetchContent)
-FetchContent_Declare(
-    pico_sdk
-    GIT_REPOSITORY          https://github.com/raspberrypi/pico-sdk
-    GIT_TAG                 2.3.1
-    GIT_SHALLOW             TRUE
-    GIT_SUBMODULES_RECURSE  TRUE
-    UPDATE_DISCONNECTED     ON
-)
-FetchContent_MakeAvailable(pico_sdk)
-set(ALL_LIBRARIES ${ALL_LIBRARIES} pico_stdlib)
+set(PICO_SDK_PATH "${CMAKE_SOURCE_DIR}/external/pico-sdk")
+include(pico_sdk_import.cmake)
 
 project(MyProject LANGUAGES CXX C ASM)
 
-include(pico_sdk_import.cmake)
-
 pico_sdk_init()
+set(ALL_LIBRARIES ${ALL_LIBRARIES} pico_stdlib)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
@@ -36,7 +26,7 @@ add_definitions(-DSOURCE_PATH_SIZE=${SOURCE_PATH_SIZE})
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-set(CONST_TARGET_NAME "rasp_target")
+set(CONST_TARGET_NAME "rasp_target.exe")
 
 
 
