@@ -5,11 +5,11 @@ int main()
 {
     led_init();
 
-    toggle_nt(3, 300);
+    led_toggle_nt(3, 300);
 
     while (true)
     {
-        toggle_t(1000);
+        led_toggle_t(1000);
     }
 
     return 0;
