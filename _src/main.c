@@ -12,7 +12,5 @@ int main()
         toggle_t(1000);
     }
 
-    
-
     return 0;
 }
